@@ -1,7 +1,5 @@
-/* sfond opsional si në screenshot */
 body { background: #8b5cf6; }
 
-/* container i shiritit të kërkimit */
 .searchbar {
   display: flex;
   align-items: center;
@@ -9,12 +7,11 @@ body { background: #8b5cf6; }
   max-width: 620px;
   margin: 16px auto;
   padding: 14px 16px;
-  background: #7c3aed;           /* vjollcë e thellë */
+  background: #7c3aed;         
   border-radius: 14px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.15) inset, 0 4px 14px rgba(0,0,0,0.12);
 }
 
-/* input transparent, tekst i bardhë */
 .searchbar input {
   flex: 1;
   background: transparent;
@@ -24,13 +21,11 @@ body { background: #8b5cf6; }
   font-size: 18px;
 }
 
-/* ngjyrë placeholder-i si në foto */
 .searchbar input::placeholder {
   color: #f8f7ff;
   opacity: 0.9;
 }
 
-/* butoni i ikonës */
 .searchbar button {
   display: grid;
   place-items: center;

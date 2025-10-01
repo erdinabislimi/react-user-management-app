@@ -39,7 +39,6 @@ export default function AddUserForm({ onAdd }) {
 
   return (
     <>
-      {/* Floating Add Button */}
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Fab
           color="primary"
@@ -51,7 +50,6 @@ export default function AddUserForm({ onAdd }) {
         </Fab>
       </Box>
 
-      {/* Dialog */}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}

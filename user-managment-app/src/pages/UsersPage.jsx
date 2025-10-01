@@ -6,16 +6,9 @@ import {
   TextField,
   Select,
   MenuItem,
-  Chip,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
 } from "@mui/material";
 import AddUserForm from "../components/AddUserForm";
+import UserTable from "../components/UserTable";
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -41,6 +34,10 @@ export default function UsersPage() {
     setUsers((prev) => [{ ...u, id }, ...prev]);
   };
 
+  const deleteUser = (id) => {
+    setUsers((prev) => prev.filter((u) => u.id !== id));
+  };
+
   const view = useMemo(() => {
     const term = q.trim().toLowerCase();
     let arr = term
@@ -62,63 +59,35 @@ export default function UsersPage() {
   if (loading) return <p>Loading…</p>;
   if (err) return <p style={{ color: "crimson" }}>Error: {err}</p>;
 
-return (
-  <Box sx={{ p: 3, width: "100%" }}>
-    <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
-      User Management
-    </Typography>
+  return (
+    <Box sx={{ p: 3, width: "100%" }}>
+      <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
+        User Management
+      </Typography>
 
-    {/* Search + Sort */}
-    <Box sx={{ display: "flex", gap: 2, mb: 2, width: "100%" }}>
-      <TextField
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        label="Search"
-        size="small"
-        fullWidth
-      />
-      <Select
-        value={sort}
-        onChange={(e) => setSort(e.target.value)}
-        size="small"
-      >
-        <MenuItem value="name-asc">Name ↑</MenuItem>
-        <MenuItem value="name-desc">Name ↓</MenuItem>
-        <MenuItem value="email-asc">Email ↑</MenuItem>
-        <MenuItem value="email-desc">Email ↓</MenuItem>
-      </Select>
+      <Box sx={{ display: "flex", gap: 2, mb: 2, width: "100%" }}>
+        <TextField
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          label="Search"
+          size="small"
+          fullWidth
+        />
+        <Select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          size="small"
+        >
+          <MenuItem value="name-asc">Name ↑</MenuItem>
+          <MenuItem value="name-desc">Name ↓</MenuItem>
+          <MenuItem value="email-asc">Email ↑</MenuItem>
+          <MenuItem value="email-desc">Email ↓</MenuItem>
+        </Select>
+      </Box>
+
+      <UserTable users={view} onDelete={deleteUser} />
+
+      <AddUserForm onAdd={addUser} />
     </Box>
-
-    {/* Table */}
-    <TableContainer component={Paper} sx={{ width: "100%" }}>
-      <Table sx={{ width: "100%" }}>
-        <TableHead>
-          <TableRow>
-            <TableCell><b>Name</b></TableCell>
-            <TableCell><b>Email</b></TableCell>
-            <TableCell><b>Company</b></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {view.map((u) => (
-            <TableRow key={u.id}>
-              <TableCell>{u.name}</TableCell>
-              <TableCell>{u.email}</TableCell>
-              <TableCell>
-                {u.company?.name ? (
-                  <Chip label={u.company.name} color="primary" variant="outlined" />
-                ) : "-"}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-
-    {/* Add User Button */}
-    <AddUserForm onAdd={addUser} />
-  </Box>
-);
-
-
+  );
 }

@@ -11,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<UsersPage />} />
         <Route path="/users/:id" element={<UserDetailsPage />} />
+        
       </Routes>
     </div>
   );
