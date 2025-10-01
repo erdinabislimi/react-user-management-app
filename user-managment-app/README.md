@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# React User Management App  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple React application for managing users. The app demonstrates CRUD operations, search, sorting, and pagination using **React** and **Material-UI**.  
 
-## Available Scripts
+## Table of Contents
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
+- [License](#license)
+- [Contact](#contact)
 
-In the project directory, you can run:
+## About the Project
+This project allows managing users with add, edit, delete, search, sort and pagination functionalities. Data is fetched from [JSONPlaceholder](https://jsonplaceholder.typicode.com/).  
 
-### `npm start`
+## Features
+- Add new users  
+- Edit user information  
+- Delete users  
+- Search by name  
+- Sort by name or email  
+- Pagination (5 users per page)  
+- See more user details  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
+- React (Vite)  
+- Material-UI (MUI)  
+- Axios  
+- React Router  
+- React Toastify  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
+```bash
+src/
+├── api/Users.js
+├── components/
+│ ├── AddUserForm.jsx
+│ ├── EditUserForm.jsx
+│ ├── DeleteUser.jsx
+│ ├── UserTable.jsx
+│ ├── Pagination.jsx
+│ └── WelcomeDialog.jsx
+├── pages/
+│ ├── UsersPage.jsx
+│ └── UserDetailsPage.jsx
+├── utils/validation.js
+├── App.js
+└── main.js
+```
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
+ 
+1. Clone the repo:
+```bash 
+git clone https://github.com/erdinabislimi/react-user-management-app.git
+```
+2. Install dependencies:
+```bash
+npm install
+```
+3. Run the app:
+```bash
+npm start
+```
 
-### `npm run build`
+## Usage
+Use the + button to add a user.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Click Edit or Delete in the table for user actions.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Use the Search bar to filter by name.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Pagination controls let you navigate between pages.
+## Screenshots
+- User Table  
+  ![User Table](./screenshots/user-table.png)
 
-### `npm run eject`
+- Add User Form  
+  ![Add User](./screenshots/add-user.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Welcome Dialog  
+  ![Welcome Dialog](./screenshots/welcome-dialog.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
+This project is open-source and available under the MIT License.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+Erdinë Bislimi - [GitHub](https://github.com/erdinabislimi)
