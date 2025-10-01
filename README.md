@@ -75,15 +75,17 @@ Click Edit or Delete in the table for user actions.
 Use the Search bar to filter by name.
 
 Pagination controls let you navigate between pages.
-## Screenshots
-- User Table  
-  ![User Table](./screenshots/user-table.png)
+## Screenshots  
 
-- Add User Form  
-  ![Add User](./screenshots/add-user.png)
+- **User Table**  
+  <img src="https://github.com/user-attachments/assets/96276739-47c6-46ec-8f3f-019061a03b88" alt="user-table" width="600"/>  
 
-- Welcome Dialog  
-  ![Welcome Dialog](./screenshots/welcome-dialog.png)
+- **Add User Form**  
+  <img src="https://github.com/user-attachments/assets/f24c04df-6177-4d0a-8b18-edc1cae7abd3" alt="add-user" width="600"/>  
+
+- **Welcome Dialog**  
+  <img src="https://github.com/user-attachments/assets/b43d1fab-046c-405b-b377-7deb0f16d8a9" alt="welcome-dialog" width="600"/>  
+
 
 
 
