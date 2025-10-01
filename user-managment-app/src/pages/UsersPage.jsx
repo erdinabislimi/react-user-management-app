@@ -6,9 +6,12 @@ import {
   TextField,
   Select,
   MenuItem,
+  Button
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import AddUserForm from "../components/AddUserForm";
 import UserTable from "../components/UserTable";
+import EditUserForm from "../components/EditUserForm"; 
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -16,6 +19,8 @@ export default function UsersPage() {
   const [err, setErr] = useState(null);
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("name-asc");
+  const [editUser, setEditUser] = useState(null);
+  const [openAdd, setOpenAdd] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -32,10 +37,17 @@ export default function UsersPage() {
   const addUser = (u) => {
     const id = crypto.randomUUID?.() ?? Date.now();
     setUsers((prev) => [{ ...u, id }, ...prev]);
+    setOpenAdd(false); 
   };
 
   const deleteUser = (id) => {
     setUsers((prev) => prev.filter((u) => u.id !== id));
+  };
+
+  const updateUser = (id, patch) => {
+    setUsers((prev) =>
+      prev.map((u) => (u.id === id ? { ...u, ...patch } : u))
+    );
   };
 
   const view = useMemo(() => {
@@ -83,11 +95,24 @@ export default function UsersPage() {
           <MenuItem value="email-asc">Email ↑</MenuItem>
           <MenuItem value="email-desc">Email ↓</MenuItem>
         </Select>
+
+
+<AddUserForm 
+  open={openAdd} 
+  onClose={() => setOpenAdd(false)} 
+  onAdd={addUser} 
+/>
+
       </Box>
 
-      <UserTable users={view} onDelete={deleteUser} />
+      <UserTable users={view} onDelete={deleteUser} onEdit={setEditUser} />
 
-      <AddUserForm onAdd={addUser} />
+      <EditUserForm
+        open={!!editUser}
+        user={editUser}
+        onClose={() => setEditUser(null)}
+        onUpdate={updateUser}
+      />
     </Box>
   );
 }

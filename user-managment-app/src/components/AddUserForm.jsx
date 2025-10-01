@@ -11,6 +11,8 @@ import {
   Box,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Transition = (props) => <Slide direction="up" {...props} />;
 
@@ -20,22 +22,24 @@ export default function AddUserForm({ onAdd }) {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name.trim()) return alert("Name is required");
-    if (!/\S+@\S+\.\S+/.test(email)) return alert("Valid email is required");
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  if (!name.trim()) return toast.error("Name is required");
+  if (!/\S+@\S+\.\S+/.test(email)) return toast.error("Valid email is required");
 
-    onAdd({
-      name: name.trim(),
-      email: email.trim(),
-      company: company ? { name: company.trim() } : undefined,
-    });
+  onAdd({
+    name: name.trim(),
+    email: email.trim(),
+    company: company ? { name: company.trim() } : undefined,
+  });
 
-    setName("");
-    setEmail("");
-    setCompany("");
-    setOpen(false);
-  };
+  toast.success("User added successfully!");
+
+  setName("");
+  setEmail("");
+  setCompany("");
+  setOpen(false);
+};
 
   return (
     <>
@@ -61,7 +65,7 @@ export default function AddUserForm({ onAdd }) {
         }}
       >
         <DialogTitle textAlign="center" color="primary">
-          ➕ Add New User
+        Add New User
         </DialogTitle>
 
         <DialogContent
@@ -101,6 +105,7 @@ export default function AddUserForm({ onAdd }) {
           </Button>
         </DialogActions>
       </Dialog>
+       <ToastContainer position="top-right" autoClose={2000} />
     </>
   );
 }

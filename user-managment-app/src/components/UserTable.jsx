@@ -1,13 +1,14 @@
 import {
   Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper, Chip
+  TableHead, TableRow, Paper, Chip, IconButton
 } from "@mui/material";
+import { Edit as EditIcon } from "@mui/icons-material";  
 import DeleteUser from "./DeleteUser";
 
-export default function UserTable({ users, onDelete }) {
+export default function UserTable({ users, onDelete, onEdit }) {
   return (
-    <TableContainer component={Paper} sx={{ width: "100%", mt: 2 }}>
-      <Table sx={{ minWidth: 800 }}>
+<TableContainer component={Paper} sx={{ width: "100%", overflowX: "auto" }}>
+  <Table sx={{ width: "100%" }}>
         <TableHead>
           <TableRow>
             <TableCell><b>Name</b></TableCell>
@@ -27,6 +28,10 @@ export default function UserTable({ users, onDelete }) {
                 ) : "-"}
               </TableCell>
               <TableCell>
+                <IconButton color="primary" onClick={() => onEdit(u)}>
+                  <EditIcon />
+                </IconButton>
+
                 <DeleteUser user={u} onDelete={onDelete} />
               </TableCell>
             </TableRow>
