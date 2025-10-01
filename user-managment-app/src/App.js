@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.jsx
+import { Routes, Route, Link } from "react-router-dom";
+import UsersPage from "./pages/UsersPage";            // pa kllapa = default import
+import UserDetailsPage from "./pages/UserDetailsPage"; // pa kllapa = default import
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: 16 }}>
+      <header style={{ display: "flex", justifyContent: "space-between" }}>
+        <Link to="/" style={{ textDecoration: "none" }}><h1>User Management</h1></Link>
       </header>
+
+      <Routes>
+        <Route path="/" element={<UsersPage />} />
+        <Route path="/users/:id" element={<UserDetailsPage />} />
+      </Routes>
     </div>
   );
 }
-
-export default App;

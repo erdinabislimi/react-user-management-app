@@ -1,6 +1,15 @@
 import axios from "axios";
 
-export async function fetchUsers() {
-    const {data}=await axios.get("https://jsonplaceholder.typicode.com/users");
+
+  const BASE ="https://jsonplaceholder.typicode.com";
+
+export async function fetchUsers(opts = {}) {
+    const {data}=await axios.get(`${BASE}/users`, opts);
     return data;
+}
+
+export async function fetchUsersById(id, opts ={}) {
+    const {data} = await axios.get (`${BASE}/users/${id}`, opts);
+    return data;
+    
 }
