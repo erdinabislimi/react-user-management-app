@@ -1,7 +1,6 @@
-// src/App.jsx
 import { Routes, Route, Link } from "react-router-dom";
-import UsersPage from "./pages/UsersPage";            // pa kllapa = default import
-import UserDetailsPage from "./pages/UserDetailsPage"; // pa kllapa = default import
+import UsersPage from "./pages/UsersPage";           
+import UserDetailsPage from "./pages/UserDetailsPage"; 
 
 export default function App() {
   return (
