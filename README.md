@@ -85,6 +85,7 @@ Pagination controls let you navigate between pages.
 - Welcome Dialog  
   ![Welcome Dialog](./screenshots/welcome-dialog.png)
 
+
 ## License
 This project is open-source and available under the MIT License.
 
