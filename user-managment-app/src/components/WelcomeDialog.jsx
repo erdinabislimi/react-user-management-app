@@ -6,7 +6,6 @@ import {
   DialogActions,
   Button,
   Typography,
-  Box,
   Slide
 } from "@mui/material";
 import Confetti from "react-confetti";
@@ -14,7 +13,7 @@ import Confetti from "react-confetti";
 const Transition = (props) => <Slide direction="up" {...props} />;
 
 export default function WelcomeDialog() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
 
   const [windowSize, setWindowSize] = useState({
@@ -23,6 +22,12 @@ export default function WelcomeDialog() {
   });
 
   useEffect(() => {
+    const alreadyShown = localStorage.getItem("welcomeShown");
+    if (!alreadyShown) {
+      setOpen(true);
+      localStorage.setItem("welcomeShown", "true");
+    }
+
     const handleResize = () =>
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     window.addEventListener("resize", handleResize);
@@ -31,9 +36,9 @@ export default function WelcomeDialog() {
 
   const handleNext = () => {
     if (step === 1) {
-      setStep(2); 
+      setStep(2);
     } else {
-      setOpen(false); 
+      setOpen(false);
     }
   };
 
@@ -68,9 +73,7 @@ export default function WelcomeDialog() {
         </DialogTitle>
 
         <DialogContent>
-          <Typography
-            sx={{ fontSize: "1.1rem", color: "text.secondary", mb: 2 }}
-          >
+          <Typography sx={{ fontSize: "1.1rem", color: "text.secondary", mb: 2 }}>
             {step === 1
               ? "We’re happy to have you here. Let’s get started!"
               : "Get ready to explore your dashboard with amazing features."}

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { validateName, validateEmail } from "../utils/validation";
 
 export default function EditUserForm({ open, onClose, user, onUpdate }) {
   const [name, setName] = useState("");
@@ -26,8 +27,9 @@ export default function EditUserForm({ open, onClose, user, onUpdate }) {
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name.trim()) return toast.error("Name is required");
-    if (!/\S+@\S+\.\S+/.test(email)) return toast.error("Valid email is required");
+
+    if (!validateName(name)) return toast.error("Name is required");
+    if (!validateEmail(email)) return toast.error("Valid email is required");
 
     onUpdate(user.id, {
       name: name.trim(),

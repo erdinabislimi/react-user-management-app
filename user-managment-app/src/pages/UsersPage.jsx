@@ -53,23 +53,19 @@ export default function UsersPage() {
     );
   };
 
-  const view = useMemo(() => {
-    const term = q.trim().toLowerCase();
-    let arr = term
-      ? users.filter(
-          (u) =>
-            u.name?.toLowerCase().includes(term) ||
-            u.email?.toLowerCase().includes(term)
-        )
-      : users.slice();
+const view = useMemo(() => {
+  const term = q.trim().toLowerCase();
+  let arr = term
+    ? users.filter((u) => u.name?.toLowerCase().includes(term)) 
+    : users.slice();
 
-    const [f, d] = sort.split("-");
-    const get = (u) =>
-      (f === "email" ? u.email : u.name)?.toLowerCase() || "";
-    return arr.sort((a, b) =>
-      get(a) < get(b) ? (d === "asc" ? -1 : 1) : get(a) > get(b) ? (d === "asc" ? 1 : -1) : 0
-    );
-  }, [users, q, sort]);
+  const [f, d] = sort.split("-");
+  const get = (u) =>
+    (f === "email" ? u.email : u.name)?.toLowerCase() || "";
+  return arr.sort((a, b) =>
+    get(a) < get(b) ? (d === "asc" ? -1 : 1) : get(a) > get(b) ? (d === "asc" ? 1 : -1) : 0
+  );
+}, [users, q, sort]);
 
   if (loading) return <p>Loading…</p>;
   if (err) return <p style={{ color: "crimson" }}>Error: {err}</p>;
@@ -96,10 +92,10 @@ export default function UsersPage() {
 
 
       <Box sx={{ display: "flex", gap: 2, mb: 2, width: "100%" }}>
-    <TextField
+<TextField
   value={q}
   onChange={(e) => setQ(e.target.value)}
-  label="Search"
+  label="Search by name"
   size="small"
   fullWidth
   InputProps={{

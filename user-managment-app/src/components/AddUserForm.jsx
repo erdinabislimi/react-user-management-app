@@ -13,6 +13,7 @@ import {
 import { Add as AddIcon } from "@mui/icons-material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { validateName, validateEmail } from "../utils/validation";
 
 const Transition = (props) => <Slide direction="up" {...props} />;
 
@@ -22,10 +23,10 @@ export default function AddUserForm({ onAdd }) {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
 
- const handleSubmit = (e) => {
+const handleSubmit = (e) => {
   e.preventDefault();
-  if (!name.trim()) return toast.error("Name is required");
-  if (!/\S+@\S+\.\S+/.test(email)) return toast.error("Valid email is required");
+  if (!validateName(name)) return toast.error("Name is required");
+  if (!validateEmail(email)) return toast.error("Valid email is required");
 
   onAdd({
     name: name.trim(),
@@ -34,11 +35,7 @@ export default function AddUserForm({ onAdd }) {
   });
 
   toast.success("User added successfully!");
-
-  setName("");
-  setEmail("");
-  setCompany("");
-  setOpen(false);
+  setName(""); setEmail(""); setCompany(""); setOpen(false);
 };
 
   return (
