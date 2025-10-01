@@ -5,13 +5,14 @@ import {
   Typography,
   TextField,
   Select,
-  MenuItem,
-  Button
+  MenuItem, InputAdornment,InputLabel, FormControl
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import AddUserForm from "../components/AddUserForm";
 import UserTable from "../components/UserTable";
 import EditUserForm from "../components/EditUserForm"; 
+import Pagination from "../components/Pagination";
+import SearchIcon from "@mui/icons-material/Search";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -21,6 +22,8 @@ export default function UsersPage() {
   const [sort, setSort] = useState("name-asc");
   const [editUser, setEditUser] = useState(null);
   const [openAdd, setOpenAdd] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5;
 
   useEffect(() => {
     (async () => {
@@ -71,47 +74,77 @@ export default function UsersPage() {
   if (loading) return <p>Loading…</p>;
   if (err) return <p style={{ color: "crimson" }}>Error: {err}</p>;
 
+  const totalPages = Math.ceil(view.length / usersPerPage);
+  const paginatedUsers = view.slice(
+    (currentPage - 1) * usersPerPage,
+    currentPage * usersPerPage
+  );
+
   return (
     <Box sx={{ p: 3, width: "100%" }}>
-      <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
-        User Management
-      </Typography>
+      <Typography
+  variant="h4"
+  fontWeight="bold"
+  color="primary"
+  gutterBottom
+  sx={{
+    fontFamily: "'Merriweather', serif"
+  }}
+>
+  User Management
+</Typography>
+
 
       <Box sx={{ display: "flex", gap: 2, mb: 2, width: "100%" }}>
-        <TextField
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          label="Search"
-          size="small"
-          fullWidth
-        />
-        <Select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          size="small"
-        >
-          <MenuItem value="name-asc">Name ↑</MenuItem>
-          <MenuItem value="name-desc">Name ↓</MenuItem>
-          <MenuItem value="email-asc">Email ↑</MenuItem>
-          <MenuItem value="email-desc">Email ↓</MenuItem>
-        </Select>
-
-
-<AddUserForm 
-  open={openAdd} 
-  onClose={() => setOpenAdd(false)} 
-  onAdd={addUser} 
+    <TextField
+  value={q}
+  onChange={(e) => setQ(e.target.value)}
+  label="Search"
+  size="small"
+  fullWidth
+  InputProps={{
+    startAdornment: (
+      <InputAdornment position="start">
+        <SearchIcon color="action" />
+      </InputAdornment>
+    ),
+  }}
 />
+   <FormControl size="small" sx={{ minWidth: 150 }}>
+  <InputLabel id="sort-label">Sort By</InputLabel>
+  <Select
+    labelId="sort-label"
+    value={sort}
+    onChange={(e) => setSort(e.target.value)}
+    IconComponent={ArrowDropDownIcon}
+  >
+    <MenuItem value="name-asc">Name ↑</MenuItem>
+    <MenuItem value="name-desc">Name ↓</MenuItem>
+    <MenuItem value="email-asc">Email ↑</MenuItem>
+    <MenuItem value="email-desc">Email ↓</MenuItem>
+  </Select>
+</FormControl>
 
+        <AddUserForm 
+          open={openAdd} 
+          onClose={() => setOpenAdd(false)} 
+          onAdd={addUser} 
+        />
       </Box>
 
-      <UserTable users={view} onDelete={deleteUser} onEdit={setEditUser} />
+      <UserTable users={paginatedUsers} onDelete={deleteUser} onEdit={setEditUser} />
 
       <EditUserForm
         open={!!editUser}
         user={editUser}
         onClose={() => setEditUser(null)}
         onUpdate={updateUser}
+      />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
       />
     </Box>
   );
