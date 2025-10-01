@@ -6,7 +6,6 @@ import {
   TextField,
   Select,
   MenuItem,
-  Button,
   Chip,
   Paper,
   Table,
@@ -16,6 +15,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import AddUserForm from "../components/AddUserForm";
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -27,8 +27,6 @@ export default function UsersPage() {
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true);
-        setErr(null);
         setUsers(await fetchUsers());
       } catch (e) {
         setErr(e.message || "Load failed");
@@ -38,9 +36,9 @@ export default function UsersPage() {
     })();
   }, []);
 
-  const addTop = (u) => {
+  const addUser = (u) => {
     const id = crypto.randomUUID?.() ?? Date.now();
-    setUsers((p) => [{ ...u, id }, ...p]);
+    setUsers((prev) => [{ ...u, id }, ...prev]);
   };
 
   const view = useMemo(() => {
@@ -64,120 +62,63 @@ export default function UsersPage() {
   if (loading) return <p>Loading…</p>;
   if (err) return <p style={{ color: "crimson" }}>Error: {err}</p>;
 
-  return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
-        User Management
-      </Typography>
+return (
+  <Box sx={{ p: 3, width: "100%" }}>
+    <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
+      User Management
+    </Typography>
 
-      {/* Search + Sort */}
-      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-        <TextField
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          label="Search"
-          variant="outlined"
-          size="small"
-        />
-        <Select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          size="small"
-        >
-          <MenuItem value="name-asc">Name ↑</MenuItem>
-          <MenuItem value="name-desc">Name ↓</MenuItem>
-          <MenuItem value="email-asc">Email ↑</MenuItem>
-          <MenuItem value="email-desc">Email ↓</MenuItem>
-        </Select>
-      </Box>
+    {/* Search + Sort */}
+    <Box sx={{ display: "flex", gap: 2, mb: 2, width: "100%" }}>
+      <TextField
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        label="Search"
+        size="small"
+        fullWidth
+      />
+      <Select
+        value={sort}
+        onChange={(e) => setSort(e.target.value)}
+        size="small"
+      >
+        <MenuItem value="name-asc">Name ↑</MenuItem>
+        <MenuItem value="name-desc">Name ↓</MenuItem>
+        <MenuItem value="email-asc">Email ↑</MenuItem>
+        <MenuItem value="email-desc">Email ↓</MenuItem>
+      </Select>
+    </Box>
 
-      {/* Add User Form */}
-      <AddForm onAdd={addTop} />
-
-      {/* Table */}
-      <TableContainer component={Paper} elevation={3}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell><b>Name</b></TableCell>
-              <TableCell><b>Email</b></TableCell>
-              <TableCell><b>Company</b></TableCell>
+    {/* Table */}
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table sx={{ width: "100%" }}>
+        <TableHead>
+          <TableRow>
+            <TableCell><b>Name</b></TableCell>
+            <TableCell><b>Email</b></TableCell>
+            <TableCell><b>Company</b></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {view.map((u) => (
+            <TableRow key={u.id}>
+              <TableCell>{u.name}</TableCell>
+              <TableCell>{u.email}</TableCell>
+              <TableCell>
+                {u.company?.name ? (
+                  <Chip label={u.company.name} color="primary" variant="outlined" />
+                ) : "-"}
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {view.map((u) => (
-              <TableRow key={u.id} hover>
-                <TableCell>{u.name}</TableCell>
-                <TableCell>{u.email}</TableCell>
-                <TableCell>
-                  {u.company?.name ? (
-                    <Chip label={u.company.name} color="primary" variant="outlined" />
-                  ) : (
-                    "-"
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
-  );
-}
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
 
-function AddForm({ onAdd }) {
-  const [name, setName] = useState(""),
-    [email, setEmail] = useState(""),
-    [company, setCompany] = useState("");
+    {/* Add User Button */}
+    <AddUserForm onAdd={addUser} />
+  </Box>
+);
 
-  const submit = (e) => {
-    e.preventDefault();
-    if (!name.trim()) return alert("Name is required");
-    if (!/\S+@\S+\.\S+/.test(email)) return alert("Valid email is required");
-    onAdd({
-      name: name.trim(),
-      email: email.trim(),
-      company: company ? { name: company.trim() } : undefined,
-    });
-    setName("");
-    setEmail("");
-    setCompany("");
-  };
 
-  return (
-    <Box
-      component="form"
-      onSubmit={submit}
-      sx={{
-        display: "flex",
-        gap: 2,
-        mb: 2,
-        p: 2,
-        border: "1px solid #eee",
-        borderRadius: 2,
-      }}
-    >
-      <TextField
-        label="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        size="small"
-      />
-      <TextField
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        size="small"
-      />
-      <TextField
-        label="Company (optional)"
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-        size="small"
-      />
-      <Button type="submit" variant="contained">
-        Add
-      </Button>
-    </Box>
-  );
 }
